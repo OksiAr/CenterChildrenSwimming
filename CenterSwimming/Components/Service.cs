@@ -28,6 +28,7 @@ namespace CenterSwimming.Components
         public string Description { get; set; }
         public Nullable<double> Discount { get; set; }
         public byte[] MainImage { get; set; }
+        public int Count { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClientService> ClientService { get; set; }

@@ -27,6 +27,11 @@ namespace CenterSwimming.Pages
             InitializeComponent();
             App.serviceListPage = this;
             Refresh();
+            if (App.AuthUser.RoleId == 1)
+            {
+                AddBtn.Visibility = Visibility.Collapsed;
+            }
+
         }
         public void Refresh()
         {
@@ -65,6 +70,7 @@ namespace CenterSwimming.Pages
 
         private void EntriesBtn_Click(object sender, RoutedEventArgs e)
         {
+            Navigation.NextPage(new PageComponent("Запись на занятие", new ClientRecordPage()));
 
         }
 

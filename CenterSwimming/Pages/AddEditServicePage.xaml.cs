@@ -92,7 +92,9 @@ namespace CenterSwimming.Pages
                 {
                     App.db.SaveChanges();
                     MessageBox.Show("Сохранено!");
-                    Navigation.NextPage(new PageComponent("Список услуг", new ServiceListPage()));
+                    
+                   Navigation.NextPage(new PageComponent("Список услуг", new ServiceListPage()));
+                    App.serviceListPage.Refresh();
 
                 }
 

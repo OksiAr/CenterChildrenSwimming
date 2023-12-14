@@ -9,7 +9,7 @@
         Title="MainWindow" Height="550" Width="800">
     <Grid >
         <Grid.Background>
-            <ImageBrush ImageSource="/Components/font.jpg"/>
+            <ImageBrush ImageSource="/Components/font2c2.png"></ImageBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>

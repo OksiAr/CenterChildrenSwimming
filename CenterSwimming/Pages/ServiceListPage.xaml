@@ -39,7 +39,7 @@
 
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Right"  Orientation="Horizontal">
-            <Button Height="35" x:Name="EntriesBtn" Click="EntriesBtn_Click">Ближайшие записи</Button>
+            <Button Height="35" x:Name="EntriesBtn" Click="EntriesBtn_Click">Абонементы и записи</Button>
             <Button Height="35" x:Name="AddBtn" Click="AddBtn_Click" >Добавить</Button>
             <TextBlock x:Name="CountDataTb" Margin="5"></TextBlock>
         </StackPanel>

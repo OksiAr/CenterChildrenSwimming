@@ -13,10 +13,8 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
-          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="GenderCode" Type="nchar" MaxLength="1" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ClientService">
@@ -26,14 +24,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientID" Type="int" Nullable="false" />
           <Property Name="ServiceID" Type="int" Nullable="false" />
-          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="Count" Type="int" />
         </EntityType>
-        <EntityType Name="Gender">
+        <EntityType Name="ClientServiceDate">
           <Key>
-            <PropertyRef Name="Code" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Code" Type="nchar" MaxLength="1" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="10" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientServiceId" Type="int" Nullable="false" />
+          <Property Name="DateOfLesson" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -53,6 +52,7 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Discount" Type="float" />
           <Property Name="MainImage" Type="varbinary(max)" />
+          <Property Name="Count" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ServicePhoto">
           <Key>
@@ -97,18 +97,6 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
-        <Association Name="FK_Client_Gender">
-          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
-          <End Role="Client" Type="Self.Client" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Client">
-              <PropertyRef Name="GenderCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Client_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
@@ -142,6 +130,18 @@
             </Principal>
             <Dependent Role="ClientService">
               <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientServiceDate_ClientService">
+          <End Role="ClientService" Type="Self.ClientService" Multiplicity="1" />
+          <End Role="ClientServiceDate" Type="Self.ClientServiceDate" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ClientService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientServiceDate">
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -196,7 +196,7 @@
         <EntityContainer Name="Хранилище CenterSwimmingDbModelContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClientService" EntityType="Self.ClientService" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientServiceDate" EntityType="Self.ClientServiceDate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServicePhoto" EntityType="Self.ServicePhoto" Schema="dbo" store:Type="Tables" />
@@ -204,10 +204,6 @@
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TagOfClient" EntityType="Self.TagOfClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Client_Gender" Association="Self.FK_Client_Gender">
-            <End Role="Gender" EntitySet="Gender" />
-            <End Role="Client" EntitySet="Client" />
-          </AssociationSet>
           <AssociationSet Name="FK_Client_User" Association="Self.FK_Client_User">
             <End Role="User" EntitySet="User" />
             <End Role="Client" EntitySet="Client" />
@@ -219,6 +215,10 @@
           <AssociationSet Name="FK_ClientService_Service" Association="Self.FK_ClientService_Service">
             <End Role="Service" EntitySet="Service" />
             <End Role="ClientService" EntitySet="ClientService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientServiceDate_ClientService" Association="Self.FK_ClientServiceDate_ClientService">
+            <End Role="ClientService" EntitySet="ClientService" />
+            <End Role="ClientServiceDate" EntitySet="ClientServiceDate" />
           </AssociationSet>
           <AssociationSet Name="FK_ServicePhoto_Service" Association="Self.FK_ServicePhoto_Service">
             <End Role="Service" EntitySet="Service" />
@@ -249,15 +249,12 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="GenderCode" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Gender" Relationship="Self.FK_Client_Gender" FromRole="Client" ToRole="Gender" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Client_User" FromRole="Client" ToRole="User" />
           <NavigationProperty Name="ClientService" Relationship="Self.FK_ClientService_Client" FromRole="Client" ToRole="ClientService" />
           <NavigationProperty Name="Tag" Relationship="Self.TagOfClient" FromRole="Client" ToRole="Tag" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="CenterSwimmingDbModel.FK_Client_User" FromRole="Client" ToRole="User" />
         </EntityType>
         <EntityType Name="ClientService">
           <Key>
@@ -266,17 +263,18 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClientID" Type="Int32" Nullable="false" />
           <Property Name="ServiceID" Type="Int32" Nullable="false" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Client" Relationship="Self.FK_ClientService_Client" FromRole="ClientService" ToRole="Client" />
           <NavigationProperty Name="Service" Relationship="Self.FK_ClientService_Service" FromRole="ClientService" ToRole="Service" />
+          <Property Name="Count" Type="Int32" />
+          <NavigationProperty Name="ClientServiceDate" Relationship="CenterSwimmingDbModel.FK_ClientServiceDate_ClientService" FromRole="ClientService" ToRole="ClientServiceDate" />
         </EntityType>
-        <EntityType Name="Gender">
+        <EntityType Name="Role">
           <Key>
-            <PropertyRef Name="Code" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Code" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Client" Relationship="Self.FK_Client_Gender" FromRole="Gender" ToRole="Client" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -291,6 +289,7 @@
           <Property Name="MainImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="ClientService" Relationship="Self.FK_ClientService_Service" FromRole="Service" ToRole="ClientService" />
           <NavigationProperty Name="ServicePhoto" Relationship="Self.FK_ServicePhoto_Service" FromRole="Service" ToRole="ServicePhoto" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ServicePhoto">
           <Key>
@@ -320,15 +319,26 @@
           <Property Name="Color" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Client" Relationship="Self.TagOfClient" FromRole="Tag" ToRole="Client" />
         </EntityType>
-        <Association Name="FK_Client_Gender">
-          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_User" FromRole="User" ToRole="Client" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Client_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="Code" />
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Client">
-              <PropertyRef Name="GenderCode" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -356,6 +366,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ServicePhoto_Service">
           <End Role="Service" Type="Self.Service" Multiplicity="1" />
           <End Role="ServicePhoto" Type="Self.ServicePhoto" Multiplicity="*" />
@@ -372,16 +394,17 @@
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
           <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="CenterSwimmingDbEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CenterSwimmingDbEnt" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Client" EntityType="Self.Client" />
           <EntitySet Name="ClientService" EntityType="Self.ClientService" />
-          <EntitySet Name="Gender" EntityType="Self.Gender" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="Service" EntityType="Self.Service" />
           <EntitySet Name="ServicePhoto" EntityType="Self.ServicePhoto" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tag" EntityType="Self.Tag" />
-          <AssociationSet Name="FK_Client_Gender" Association="Self.FK_Client_Gender">
-            <End Role="Gender" EntitySet="Gender" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Client_User" Association="Self.FK_Client_User">
+            <End Role="User" EntitySet="User" />
             <End Role="Client" EntitySet="Client" />
           </AssociationSet>
           <AssociationSet Name="FK_ClientService_Client" Association="Self.FK_ClientService_Client">
@@ -392,6 +415,10 @@
             <End Role="Service" EntitySet="Service" />
             <End Role="ClientService" EntitySet="ClientService" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_ServicePhoto_Service" Association="Self.FK_ServicePhoto_Service">
             <End Role="Service" EntitySet="Service" />
             <End Role="ServicePhoto" EntitySet="ServicePhoto" />
@@ -400,57 +427,30 @@
             <End Role="Client" EntitySet="Client" />
             <End Role="Tag" EntitySet="Tag" />
           </AssociationSet>
-          <EntitySet Name="Role" EntityType="CenterSwimmingDbModel.Role" />
-          <EntitySet Name="User" EntityType="CenterSwimmingDbModel.User" />
-          <AssociationSet Name="FK_Client_User" Association="CenterSwimmingDbModel.FK_Client_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Client" EntitySet="Client" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="CenterSwimmingDbModel.FK_User_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="User" EntitySet="User" />
+          <EntitySet Name="ClientServiceDate" EntityType="CenterSwimmingDbModel.ClientServiceDate" />
+          <AssociationSet Name="FK_ClientServiceDate_ClientService" Association="CenterSwimmingDbModel.FK_ClientServiceDate_ClientService">
+            <End Role="ClientService" EntitySet="ClientService" />
+            <End Role="ClientServiceDate" EntitySet="ClientServiceDate" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Role">
+        <EntityType Name="ClientServiceDate">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="CenterSwimmingDbModel.FK_User_Role" FromRole="Role" ToRole="User" />
+          <Property Name="ClientServiceId" Type="Int32" Nullable="false" />
+          <Property Name="DateOfLesson" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ClientService" Relationship="CenterSwimmingDbModel.FK_ClientServiceDate_ClientService" FromRole="ClientServiceDate" ToRole="ClientService" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RoleId" Type="Int32" />
-          <NavigationProperty Name="Client" Relationship="CenterSwimmingDbModel.FK_Client_User" FromRole="User" ToRole="Client" />
-          <NavigationProperty Name="Role" Relationship="CenterSwimmingDbModel.FK_User_Role" FromRole="User" ToRole="Role" />
-        </EntityType>
-        <Association Name="FK_Client_User">
-          <End Type="CenterSwimmingDbModel.User" Role="User" Multiplicity="1" />
-          <End Type="CenterSwimmingDbModel.Client" Role="Client" Multiplicity="*" />
+        <Association Name="FK_ClientServiceDate_ClientService">
+          <End Type="CenterSwimmingDbModel.ClientService" Role="ClientService" Multiplicity="1" />
+          <End Type="CenterSwimmingDbModel.ClientServiceDate" Role="ClientServiceDate" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
+            <Principal Role="ClientService">
+              <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Client">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_Role">
-          <End Type="CenterSwimmingDbModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="CenterSwimmingDbModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
+            <Dependent Role="ClientServiceDate">
               <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -459,36 +459,34 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище CenterSwimmingDbModelContainer" CdmEntityContainer="CenterSwimmingDbEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CenterSwimmingDbModelContainer" CdmEntityContainer="CenterSwimmingDbEnt">
           <EntitySetMapping Name="Client">
             <EntityTypeMapping TypeName="CenterSwimmingDbModel.Client">
               <MappingFragment StoreEntitySet="Client">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="GenderCode" ColumnName="GenderCode" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ClientService">
             <EntityTypeMapping TypeName="CenterSwimmingDbModel.ClientService">
               <MappingFragment StoreEntitySet="ClientService">
+                <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Gender">
-            <EntityTypeMapping TypeName="CenterSwimmingDbModel.Gender">
-              <MappingFragment StoreEntitySet="Gender">
-                <ScalarProperty Name="Code" ColumnName="Code" />
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="CenterSwimmingDbModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -496,6 +494,7 @@
           <EntitySetMapping Name="Service">
             <EntityTypeMapping TypeName="CenterSwimmingDbModel.Service">
               <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
@@ -535,6 +534,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="CenterSwimmingDbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="TagOfClient" TypeName="CenterSwimmingDbModel.TagOfClient" StoreEntitySet="TagOfClient">
             <EndProperty Name="Client">
               <ScalarProperty Name="ID" ColumnName="ClientID" />
@@ -543,20 +552,11 @@
               <ScalarProperty Name="ID" ColumnName="TagID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Role">
-            <EntityTypeMapping TypeName="CenterSwimmingDbModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="CenterSwimmingDbModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
+          <EntitySetMapping Name="ClientServiceDate">
+            <EntityTypeMapping TypeName="CenterSwimmingDbModel.ClientServiceDate">
+              <MappingFragment StoreEntitySet="ClientServiceDate">
+                <ScalarProperty Name="DateOfLesson" ColumnName="DateOfLesson" />
+                <ScalarProperty Name="ClientServiceId" ColumnName="ClientServiceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

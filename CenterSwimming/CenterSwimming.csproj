@@ -237,7 +237,7 @@
     <Compile Include="Components\ClientService.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Components\Gender.cs">
+    <Compile Include="Components\ClientServiceDate.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Components\Model.Context.cs">
@@ -359,20 +359,25 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Components\font.jpg" />
-    <Resource Include="Components\Image.png" />
+    <Resource Include="Components\font2c2.png" />
+    <Resource Include="Components\font2c.png" />
+    <Resource Include="Components\font2.png" />
+    <Resource Include="Components\font1.png" />
     <Content Include="Components\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
       <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Components\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Components\font.jpg" />
+    <Resource Include="Components\Image.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

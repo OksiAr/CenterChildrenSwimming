@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f639be088c744304befb7167dd52eb09" Name="Diagram1">
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.Client" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.ClientService" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.Gender" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.Service" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.ServicePhoto" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.Tag" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
-        <AssociationConnector Association="CenterSwimmingDbModel.FK_Client_Gender" ManuallyRouted="false" />
+      <Diagram DiagramId="274339587d834fd29e61595beaab1d2e" Name="Diagram1">
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.Client" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.ClientService" Width="1.5" PointX="7.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.Role" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.Service" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.ServicePhoto" Width="1.5" PointX="7.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.Tag" Width="1.5" PointX="7.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.User" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="CenterSwimmingDbModel.FK_Client_User" ManuallyRouted="false" />
         <AssociationConnector Association="CenterSwimmingDbModel.FK_ClientService_Client" ManuallyRouted="false" />
         <AssociationConnector Association="CenterSwimmingDbModel.FK_ClientService_Service" ManuallyRouted="false" />
+        <AssociationConnector Association="CenterSwimmingDbModel.FK_User_Role" ManuallyRouted="false" />
         <AssociationConnector Association="CenterSwimmingDbModel.FK_ServicePhoto_Service" ManuallyRouted="false" />
         <AssociationConnector Association="CenterSwimmingDbModel.TagOfClient" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.Role" Width="1.5" PointX="0.75" PointY="7" />
-        <EntityTypeShape EntityType="CenterSwimmingDbModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
-        <AssociationConnector Association="CenterSwimmingDbModel.FK_Client_User" />
-        <AssociationConnector Association="CenterSwimmingDbModel.FK_User_Role" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.ClientServiceDate" Width="1.5" PointX="9.75" PointY="2.625" />
+        <AssociationConnector Association="CenterSwimmingDbModel.FK_ClientServiceDate_ClientService" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -34,10 +34,8 @@ namespace CenterSwimming.Components.UserControls
                 EditBtn.Visibility = Visibility.Hidden;
                 DeleteBtn.Visibility = Visibility.Hidden;
             }
-           
-
         }
-       
+
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             Navigation.NextPage(new PageComponent("Редактирование услуги", new AddEditServicePage(service)));
@@ -52,14 +50,31 @@ namespace CenterSwimming.Components.UserControls
             else
             {
                 App.db.Service.Remove(service);
-                App.db.SaveChanges();     
+                App.db.SaveChanges();
                 App.serviceListPage.Refresh();
             }
         }
 
         private void ByeBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                MessageBoxResult result = MessageBox.Show($"Вы действительно хотите преобрести абонемент {service.Title}", "Покупка абонемента", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    App.db.ClientService.Add(new ClientService()
+                    {
+                        ClientID = App.AuthClient.ID,
+                        ServiceID = service.ID,
+                        Count = 0
+                    }); ;
+                    App.db.SaveChanges();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Что-то пошло не так!");
+            }
         }
     }
 }

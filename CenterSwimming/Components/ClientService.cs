@@ -17,9 +17,10 @@ namespace CenterSwimming.Components
         public int ID { get; set; }
         public int ClientID { get; set; }
         public int ServiceID { get; set; }
-        public System.DateTime StartTime { get; set; }
+        public Nullable<int> Count { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual Service Service { get; set; }
+        public virtual ClientServiceDate ClientServiceDate { get; set; }
     }
 }

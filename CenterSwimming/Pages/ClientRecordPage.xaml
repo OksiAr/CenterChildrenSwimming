@@ -8,20 +8,31 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClientRecordPage">
 
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{Binding Title}"></TextBlock>
-            <TextBlock Text="{Binding CostTime}"></TextBlock>
-            <ComboBox Name="ClientCb" Width="250"></ComboBox>
-            <DatePicker Width="250" Margin="5" Name="DateDp" Height="35"></DatePicker>
-            <StackPanel Orientation="Horizontal" Width="250">
-                <TextBlock>Время</TextBlock>
-                <ScrollViewer Margin="2" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Disabled" Width="140" Height="80">
-                    <WrapPanel  x:Name="TimeWp" ></WrapPanel>
-                </ScrollViewer>
-                <TextBox Width="55" Name="EndTimeTb"  IsEnabled="False" ></TextBox>
+    <Grid Background="White">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <StackPanel >
+                <Calendar  Margin="5" Name="DateC" DisplayDateChanged="DateC_DisplayDateChanged" MouseDoubleClick="DateC_MouseDoubleClick"></Calendar>
+                <StackPanel Orientation="Horizontal" Width="250">
+                    <TextBlock>Время</TextBlock>
+                    <ScrollViewer Margin="2" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Disabled" Width="140" Height="80">
+                        <WrapPanel  x:Name="TimeWp" ></WrapPanel>
+                    </ScrollViewer>
+                    <TextBox Width="55" Name="EndTimeTb"  IsEnabled="False" ></TextBox>
+                </StackPanel>
+                <Button x:Name="EntryBtn" Click="EntryBtn_Click">Записаться</Button>
             </StackPanel>
-            <Button x:Name="EntryBtn" Click="EntryBtn_Click">Записаться</Button>
+            <StackPanel>
+                <TextBlock Name="CountLessonTb"></TextBlock>
+                <ListView x:Name="ClientServiceDateList">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="№"></GridViewColumn>
+                            <GridViewColumn Header="Дата занятия"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
         </StackPanel>
+       
     </Grid>
 </Page>

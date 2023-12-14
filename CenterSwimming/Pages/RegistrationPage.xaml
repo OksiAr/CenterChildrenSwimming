@@ -11,29 +11,38 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock>Фамилия</TextBlock>
-                <TextBox x:Name="FirstNameTb"></TextBox>
+            <StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>Фамилия</TextBlock>
+                    <TextBox x:Name="FirstNameTb"></TextBox>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>Имя</TextBlock>
+                    <TextBox x:Name="LastNameTb"></TextBox>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>Отчество</TextBlock>
+                    <TextBox x:Name="PatronymicTb"></TextBox>
+                </StackPanel>
+                
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>Email</TextBlock>
+                    <TextBox x:Name="EmailTb" ></TextBox>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>Телефон</TextBlock>
+                    <TextBox x:Name="PhoneTb" ></TextBox>
+                </StackPanel>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock>Имя</TextBlock>
-                <TextBox x:Name="LastNameTb"></TextBox>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock>Отчество</TextBlock>
-                <TextBox x:Name="PatronymicTb"></TextBox>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock>Дата рождения</TextBlock>
-                <DatePicker Margin="5" Height="35" Width="150" x:Name="DateOfBirthDp" ></DatePicker>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock>Email</TextBlock>
-                <TextBox x:Name="EmailTb" ></TextBox>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock>Телефон</TextBlock>
-                <TextBox x:Name="PhoneTb" ></TextBox>
+            <StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>Логин</TextBlock>
+                    <TextBox x:Name="LoginTb" ></TextBox>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock>Пароль</TextBlock>
+                    <TextBox x:Name="PasswordTb" ></TextBox>
+                </StackPanel>
             </StackPanel>
             <Button x:Name="RegistrationBtn" Click="RegistrationBtn_Click">Зарегистрироваться</Button>
         </StackPanel>
