@@ -256,6 +256,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Components\Navigation.cs" />
+    <Compile Include="Components\PartialClass\ClientServiceDate.cs" />
     <Compile Include="Components\PartialClass\Service.cs" />
     <Compile Include="Components\Role.cs">
       <DependentUpon>Model.tt</DependentUpon>

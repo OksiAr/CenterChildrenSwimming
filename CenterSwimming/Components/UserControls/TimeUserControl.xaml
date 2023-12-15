@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="150">
 
-    <Button Background="White" Foreground="Black" x:Name="TimeBtn">
+    <Button Background="White" Foreground="Black" x:Name="TimeBtn" Click="TimeBtn_Click">
         <Button.Resources>
             <Style TargetType="Border">
                 <Setter Property="CornerRadius" Value="7"/>

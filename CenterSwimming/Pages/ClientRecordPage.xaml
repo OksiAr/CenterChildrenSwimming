@@ -12,12 +12,13 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
             <StackPanel >
                 <Calendar  Margin="5" Name="DateC" DisplayDateChanged="DateC_DisplayDateChanged" MouseDoubleClick="DateC_MouseDoubleClick"></Calendar>
-                <StackPanel Orientation="Horizontal" Width="250">
+                <StackPanel Orientation="Horizontal" Width="250"  HorizontalAlignment="Center">
                     <TextBlock>Время</TextBlock>
-                    <ScrollViewer Margin="2" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Disabled" Width="140" Height="80">
-                        <WrapPanel  x:Name="TimeWp" ></WrapPanel>
+                    <ScrollViewer Margin="2" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Disabled" Width="140" Height="90">
+                        <!--<WrapPanel x:Name="TimeWp" ></WrapPanel>-->
+                        <ListView  x:Name="TimeList" ></ListView>
                     </ScrollViewer>
-                    <TextBox Width="55" Name="EndTimeTb"  IsEnabled="False" ></TextBox>
+                   
                 </StackPanel>
                 <Button x:Name="EntryBtn" Click="EntryBtn_Click">Записаться</Button>
             </StackPanel>
@@ -26,8 +27,16 @@
                 <ListView x:Name="ClientServiceDateList">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="№"></GridViewColumn>
-                            <GridViewColumn Header="Дата занятия"></GridViewColumn>
+                            <GridViewColumn Header="Дата занятия" DisplayMemberBinding="{Binding DateOfLesson, StringFormat=dd.MM.yyyy}"></GridViewColumn>
+                            <GridViewColumn Header="Начало" DisplayMemberBinding="{Binding DateOfLesson, StringFormat =hh.mm}"></GridViewColumn>
+                            <GridViewColumn Header="Конец" DisplayMemberBinding="{Binding TimeEnd, StringFormat=hh.mm}"></GridViewColumn>
+                            <GridViewColumn >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="DeleteBtn" Click="DeleteBtn_Click">Отменить</Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

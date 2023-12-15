@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -20,32 +21,37 @@ namespace CenterSwimming.Pages
 {
     /// <summary>
     /// Логика взаимодействия для ClientRecordPage.xaml
-    /// </summary>
+    /// </summary> 
+
     public partial class ClientRecordPage : Page
     {
+        private static ClientService clientService = App.db.ClientService.FirstOrDefault(x => x.ClientID == App.AuthClient.ID);
         public ClientRecordPage()
         {
             InitializeComponent();
             DateC.DisplayDateStart = DateTime.Now;
             RefreshDate();
             ListRefresh();
-
         }
         private void ListRefresh()
         {
-            CountLessonTb.Text = $"У вас использовано {App.db.ClientService.FirstOrDefault(x=> x.ClientID == App.AuthClient.ID).Count} из {App.db.ClientService.FirstOrDefault(x=> x.ClientID == App.AuthClient.ID).Service.Count} занятий";
-            ClientServiceDateList.ItemsSource = App.db.ClientServiceDate.Where(x=> x.ClientService.ClientID == App.AuthClient.ID).ToList(); 
+            CountLessonTb.Text = $"У вас использовано {clientService.Count} из {clientService.Service.Count} занятий";
+            ClientServiceDateList.ItemsSource = App.db.ClientServiceDate.OrderBy(x => x.DateOfLesson).Where(x => x.ClientService.ClientID == App.AuthClient.ID && x.DateOfLesson > DateTime.Now).ToList();
         }
         private void RefreshDate()
         {
-            TimeWp.Children.Clear();
+            List<string> timesList = new List<string>();
+            timesList.Clear();
+            //TimeWp.Children.Clear();
             if (DateTime.Now < DateC.SelectedDate)
             {
 
                 for (int time = 8; time <= 20; time++)
                 {
-                    TimeWp.Children.Add(new TimeUserControl(time + ":00"));
+                    timesList.Add(time + ":00");
+                    //TimeWp.Children.Add(new TimeUserControl(time + ":00"));
                 }
+                TimeList.ItemsSource = timesList;
             }
             else
             {
@@ -53,9 +59,11 @@ namespace CenterSwimming.Pages
                 {
                     if (time > DateTime.Now.Hour)
                     {
-                        TimeWp.Children.Add(new TimeUserControl(time + ":00"));
+                        timesList.Add(time + ":00");
+                        //TimeWp.Children.Add(new TimeUserControl(time + ":00"));
                     }
                 }
+                TimeList.ItemsSource = timesList;
             }
         }
 
@@ -67,17 +75,27 @@ namespace CenterSwimming.Pages
         {
             try
             {
-                App.db.ClientServiceDate.Add(new ClientServiceDate()
+                if (TimeList.SelectedItem != null)
                 {
-                    DateOfLesson = DateC.SelectedDate.Value,
-                    ClientServiceId = App.db.ClientService.FirstOrDefault(x => x.ClientID == App.AuthClient.ID).ID,
-                });
-                App.db.ClientService.FirstOrDefault(x => x.ClientID == App.AuthClient.ID).Count++;
-                App.db.SaveChanges();
+                    var date = $"{DateC.SelectedDate.Value.Date.ToString("dd.MM.yyyy")} {TimeList.SelectedItem}";
+                    App.db.ClientServiceDate.Add(new ClientServiceDate()
+                    {
+                        DateOfLesson = DateTime.Parse(date),
+                        ClientServiceId = clientService.ID,
+                    });
+                    clientService.Count++;
+                    App.db.SaveChanges();
+
+                }
+                else
+                {
+                    MessageBox.Show("Укажите время из списка!");
+                }
+
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Что-то пошло не так!");
+                MessageBox.Show("Что-то пошло не так!" + ex.Message);
             }
             ListRefresh();
 
@@ -88,7 +106,19 @@ namespace CenterSwimming.Pages
             RefreshDate();
         }
 
-        
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var selRow = (sender as Button).DataContext as ClientServiceDate;
+            MessageBoxResult result = MessageBox.Show($"Вы действительно хотите отменить запись на {selRow.DateOfLesson.ToString("dd.MM.yyyy")}", "Отмена записи", MessageBoxButton.YesNo);
+            if(result == MessageBoxResult.Yes)
+            {
+                App.db.ClientServiceDate.Remove(selRow);
+                clientService.Count--;
+                App.db.SaveChanges();
+                ListRefresh();
+            }
+
+        }
     }
 }
 

@@ -25,5 +25,10 @@ namespace CenterSwimming.Components.UserControls
             InitializeComponent();
             TimeBtn.Content = time;
         }
+
+        private void TimeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

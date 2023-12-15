@@ -26,13 +26,13 @@ namespace CenterSwimming.Components
         }
     
         public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<ClientService> ClientService { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<ServicePhoto> ServicePhoto { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<ClientService> ClientService { get; set; }
         public virtual DbSet<ClientServiceDate> ClientServiceDate { get; set; }
     }
 }
