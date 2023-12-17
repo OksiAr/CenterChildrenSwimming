@@ -25,13 +25,19 @@ namespace CenterSwimming.Pages
 
     public partial class ClientRecordPage : Page
     {
-        private static ClientService clientService = App.db.ClientService.FirstOrDefault(x => x.ClientID == App.AuthClient.ID);
+        private static ClientService clientService = App.db.ClientService.FirstOrDefault(x => x.ClientID == App.AuthClient.ID && x.IsComplited != true);
         public ClientRecordPage()
         {
             InitializeComponent();
             DateC.DisplayDateStart = DateTime.Now;
             RefreshDate();
             ListRefresh();
+            if (clientService.ClientServiceDate.All(x => x.DateOfLesson < DateTime.Now) && clientService.ClientServiceDate.Count == clientService.Service.Count)
+            {
+                clientService.IsComplited = true;
+                App.db.SaveChanges();
+            }
+
         }
         private void ListRefresh()
         {
@@ -75,31 +81,36 @@ namespace CenterSwimming.Pages
         {
             try
             {
-                if (TimeList.SelectedItem != null)
+                if (clientService.Count != clientService.Service.Count)
                 {
-                    var date = $"{DateC.SelectedDate.Value.Date.ToString("dd.MM.yyyy")} {TimeList.SelectedItem}";
-                    App.db.ClientServiceDate.Add(new ClientServiceDate()
+                    if (TimeList.SelectedItem != null)
                     {
-                        DateOfLesson = DateTime.Parse(date),
-                        ClientServiceId = clientService.ID,
-                    });
-                    clientService.Count++;
-                    App.db.SaveChanges();
-
+                        var date = $"{DateC.SelectedDate.Value.Date.ToString("dd.MM.yyyy")} {TimeList.SelectedItem}";
+                        App.db.ClientServiceDate.Add(new ClientServiceDate()
+                        {
+                            DateOfLesson = DateTime.Parse(date),
+                            ClientServiceId = clientService.ID,
+                        });
+                        clientService.Count++;
+                        App.db.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Укажите время из списка!");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Укажите время из списка!");
+                    MessageBox.Show("Использованы все занятия абонемента!");
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Что-то пошло не так!" + ex.Message);
             }
             ListRefresh();
-
         }
+
 
         private void DateC_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -110,7 +121,7 @@ namespace CenterSwimming.Pages
         {
             var selRow = (sender as Button).DataContext as ClientServiceDate;
             MessageBoxResult result = MessageBox.Show($"Вы действительно хотите отменить запись на {selRow.DateOfLesson.ToString("dd.MM.yyyy")}", "Отмена записи", MessageBoxButton.YesNo);
-            if(result == MessageBoxResult.Yes)
+            if (result == MessageBoxResult.Yes)
             {
                 App.db.ClientServiceDate.Remove(selRow);
                 clientService.Count--;

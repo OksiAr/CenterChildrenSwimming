@@ -20,5 +20,6 @@ namespace CenterSwimming
         public static Client AuthClient;
         public static AddEditServicePage servicePage;
         public static ServiceListPage serviceListPage;
+        public static Trainer SelectTrainer;
     }
 }

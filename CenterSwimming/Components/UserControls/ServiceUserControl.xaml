@@ -10,14 +10,14 @@
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="124*"/>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="20*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
             </Grid.RowDefinitions>
 
-            <Image Height="180"  Source="{Binding MainImage}" Margin="5" x:Name="ServiceImg"></Image>
+            <Image Height="65"  Source="{Binding MainImage}" Margin="5" x:Name="ServiceImg"></Image>
             <TextBlock Text="{Binding Title}" x:Name="TitleTb" Grid.Row="1" ></TextBlock>
             <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="{Binding Description}"></TextBlock>
 

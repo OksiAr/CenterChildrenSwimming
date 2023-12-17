@@ -21,6 +21,8 @@
         <AssociationConnector Association="CenterSwimmingDbModel.FK_ClientService_Client" />
         <AssociationConnector Association="CenterSwimmingDbModel.FK_ClientService_Service" />
         <AssociationConnector Association="CenterSwimmingDbModel.FK_ClientServiceDate_ClientService1" />
+        <EntityTypeShape EntityType="CenterSwimmingDbModel.Trainer" Width="1.5" PointX="0.75" PointY="9" />
+        <AssociationConnector Association="CenterSwimmingDbModel.FK_ClientService_Trainer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

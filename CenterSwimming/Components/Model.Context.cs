@@ -34,5 +34,6 @@ namespace CenterSwimming.Components
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<ClientService> ClientService { get; set; }
         public virtual DbSet<ClientServiceDate> ClientServiceDate { get; set; }
+        public virtual DbSet<Trainer> Trainer { get; set; }
     }
 }

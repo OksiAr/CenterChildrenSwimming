@@ -223,6 +223,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\UserControls\TrainerUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -258,6 +262,7 @@
     <Compile Include="Components\Navigation.cs" />
     <Compile Include="Components\PartialClass\ClientServiceDate.cs" />
     <Compile Include="Components\PartialClass\Service.cs" />
+    <Compile Include="Components\PartialClass\Trainer.cs" />
     <Compile Include="Components\Role.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -273,6 +278,9 @@
     <Compile Include="Components\Tag.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Components\Trainer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Components\User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -285,6 +293,9 @@
     <Compile Include="Components\UserControls\TimeUserControl.xaml.cs">
       <DependentUpon>TimeUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\UserControls\TrainerUserControl.xaml.cs">
+      <DependentUpon>TrainerUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -294,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AuthorizationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ByePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -316,6 +331,9 @@
     </Compile>
     <Compile Include="Pages\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ByePage.xaml.cs">
+      <DependentUpon>ByePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ClientRecordPage.xaml.cs">
       <DependentUpon>ClientRecordPage.xaml</DependentUpon>

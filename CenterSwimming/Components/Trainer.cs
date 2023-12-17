@@ -12,25 +12,22 @@ namespace CenterSwimming.Components
     using System;
     using System.Collections.Generic;
     
-    public partial class ClientService
+    public partial class Trainer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ClientService()
+        public Trainer()
         {
-            this.ClientServiceDate = new HashSet<ClientServiceDate>();
+            this.ClientService = new HashSet<ClientService>();
         }
     
-        public int ID { get; set; }
-        public int ClientID { get; set; }
-        public int ServiceID { get; set; }
-        public Nullable<int> Count { get; set; }
-        public Nullable<int> TrainerId { get; set; }
-        public Nullable<bool> IsComplited { get; set; }
+        public int Id { get; set; }
+        public byte[] MainImage { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Patronymic { get; set; }
+        public string Description { get; set; }
     
-        public virtual Client Client { get; set; }
-        public virtual Service Service { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClientServiceDate> ClientServiceDate { get; set; }
-        public virtual Trainer Trainer { get; set; }
+        public virtual ICollection<ClientService> ClientService { get; set; }
     }
 }

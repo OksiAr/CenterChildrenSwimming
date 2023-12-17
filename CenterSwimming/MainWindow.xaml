@@ -17,10 +17,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="69*"/>
-            <RowDefinition Height="365*"/>
+            <RowDefinition Height="445*"/>
         </Grid.RowDefinitions>
         <TextBlock FontSize="18" x:Name="TitleTb" Grid.ColumnSpan="2" HorizontalAlignment="Center">Заголовок</TextBlock>
-        <Button x:Name="ExitBtn" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">Выход</Button>
+        <Button x:Name="ExitBtn" Click="ExitBtn_Click" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">Выход</Button>
         <Line Grid.ColumnSpan="2" ></Line>
         <Frame NavigationUIVisibility="Hidden" x:Name="MainFrame" Grid.Row="1" Grid.Column="1"></Frame>
         <Button x:Name="BackBtn" Grid.Row="1" VerticalAlignment="Bottom" Click="BackBtn_Click">Назад</Button>

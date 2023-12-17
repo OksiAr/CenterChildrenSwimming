@@ -31,6 +31,10 @@ namespace CenterSwimming.Pages
             {
                 AddBtn.Visibility = Visibility.Collapsed;
             }
+            if(App.AuthUser.RoleId == 2)
+            {
+                EntriesBtn.Visibility = Visibility.Collapsed;
+            }
 
         }
         public void Refresh()

@@ -33,5 +33,14 @@ namespace CenterSwimming
         {
             Navigation.BackPage();
         }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            App.AuthClient = null;
+            App.AuthUser = null;
+            Navigation.ClearHistory();
+            Navigation.NextPage(new PageComponent("Авторизация", new AuthorizationPage()));
+        }
     }
 }
