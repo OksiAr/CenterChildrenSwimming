@@ -23,14 +23,14 @@ namespace CenterSwimming.Components
         public int ID { get; set; }
         public int ClientID { get; set; }
         public int ServiceID { get; set; }
-        public Nullable<int> Count { get; set; }
         public Nullable<int> TrainerId { get; set; }
+        public Nullable<int> Count { get; set; }
         public Nullable<bool> IsComplited { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual Service Service { get; set; }
+        public virtual Trainer Trainer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClientServiceDate> ClientServiceDate { get; set; }
-        public virtual Trainer Trainer { get; set; }
     }
 }

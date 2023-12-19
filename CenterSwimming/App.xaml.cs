@@ -15,7 +15,7 @@ namespace CenterSwimming
     /// </summary>
     public partial class App : Application
     {
-        public static CenterSwimmingDbEnt db = new CenterSwimmingDbEnt();
+        public static CenterSwimmingDbEnti db = new CenterSwimmingDbEnti();
         public static User AuthUser;
         public static Client AuthClient;
         public static AddEditServicePage servicePage;

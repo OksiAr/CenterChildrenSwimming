@@ -38,7 +38,7 @@ namespace CenterSwimming.Pages
             if(App.AuthUser != null) 
             {
                 App.AuthClient = App.db.Client.FirstOrDefault(x => x.UserId == App.AuthUser.Id);
-                Navigation.NextPage(new PageComponent("Срисок услуг", new ServiceListPage()));
+                Navigation.NextPage(new PageComponent("Список услуг", new ServiceListPage()));
 
             }
             else
