@@ -40,7 +40,7 @@ namespace CenterSwimming
             App.AuthClient = null;
             App.AuthUser = null;
             Navigation.ClearHistory();
-            Navigation.NextPage(new PageComponent("Авторизация", new AuthorizationPage()));
+            Navigation.NextPage(new PageComponent("Авторизация", new AuthorizationPage())); 
         }
     }
 }
